@@ -1,23 +1,23 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { SocioModule } from './socio/socio.module';
+import { MemberModule } from './member/member.module';
 import { ClubModule } from './club/club.module';
-import { ClubSocioModule } from './club-socio/club-socio.module';
+import { ClubMemberModule } from './club-member/club-member.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SocioEntity } from './socio/socio.entity';
+import { MemberEntity } from './member/member.entity';
 import { ClubEntity } from './club/club.entity';
 
 @Module({
-  imports: [SocioModule, ClubModule, ClubSocioModule,
+  imports: [MemberModule, ClubModule, ClubMemberModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
       port: 5432,
       username: 'postgres',
       password: '1234',
-      database: 'clubes-socios',
-      entities: [SocioEntity, ClubEntity],
+      database: 'clubs-members',
+      entities: [MemberEntity, ClubEntity],
       dropSchema: true,
       synchronize: true,
       keepConnectionAlive: true,

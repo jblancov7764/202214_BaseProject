@@ -6,7 +6,7 @@ import { ClubService } from './club.service';
 import { plainToInstance } from 'class-transformer';
 
 @UseInterceptors(BusinessErrorsInterceptor)
-@Controller('clubes')
+@Controller('clubs')
 export class ClubController {
 
     constructor(private readonly clubService: ClubService) {}

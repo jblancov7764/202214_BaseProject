@@ -10,7 +10,7 @@ import { faker } from '@faker-js/faker';
 describe('ClubService', () => {
   let service: ClubService;
   let repository: Repository<ClubEntity>;
-  let clubesList: ClubEntity[];
+  let clubsList: ClubEntity[];
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -25,7 +25,7 @@ describe('ClubService', () => {
 
   const seedDatabase = async () => {
     repository.clear();
-    clubesList = [];
+    clubsList = [];
     for(let i = 0; i < 5; i++){
         const club: ClubEntity = await repository.save({
           nombre: faker.name.fullName(),
@@ -33,7 +33,7 @@ describe('ClubService', () => {
           descripcion: faker.lorem.sentence(),
           imagen: faker.internet.url()
         });
-        clubesList.push(club)
+        clubsList.push(club)
    }
   }
 
@@ -41,14 +41,14 @@ describe('ClubService', () => {
     expect(service).toBeDefined();
   });
 
-  it('findAll should return all clubes', async () => {
-    const clubes: ClubEntity[] = await service.findAll();
-    expect(clubes).not.toBeNull();
-    expect(clubes).toHaveLength(clubesList.length);
+  it('findAll should return all clubs', async () => {
+    const clubs: ClubEntity[] = await service.findAll();
+    expect(clubs).not.toBeNull();
+    expect(clubs).toHaveLength(clubsList.length);
   });
 
   it('findOne should return a club by id', async () => {
-    const storedClub: ClubEntity = clubesList[0];
+    const storedClub: ClubEntity = clubsList[0];
     const club: ClubEntity = await service.findOne(storedClub.id);
     expect(club).not.toBeNull();
     expect(club.nombre).toEqual(storedClub.nombre)
@@ -67,7 +67,7 @@ describe('ClubService', () => {
       fechaFundacion: faker.date.past(10),
       descripcion: faker.lorem.sentence(),
       imagen: faker.internet.url(),
-      socios : []
+      members : []
     }
 
     const newClub: ClubEntity = await service.create(club);
@@ -81,7 +81,7 @@ describe('ClubService', () => {
   });
 
   it('update should modify a club', async () => {
-    const club: ClubEntity  = clubesList[0];
+    const club: ClubEntity  = clubsList[0];
     club.nombre = "New name";
     club.descripcion = "New Description";
   
@@ -95,7 +95,7 @@ describe('ClubService', () => {
   });
 
   it('update should throw an exception for an invalid club', async () => {
-    const club: ClubEntity  = clubesList[0];
+    const club: ClubEntity  = clubsList[0];
     club.nombre = "New name";
     club.descripcion = "New Description";
 
@@ -103,7 +103,7 @@ describe('ClubService', () => {
   });
 
   it('delete should remove a club', async () => {
-    const club: ClubEntity = clubesList[0];
+    const club: ClubEntity = clubsList[0];
     await service.delete(club.id);
   
     const deletedClub: ClubEntity = await repository.findOne({ where: { id: club.id } })
