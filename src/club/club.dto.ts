@@ -1,19 +1,19 @@
-import {IsDate, IsNotEmpty, IsUrl, IsString} from 'class-validator';
+import {IsNotEmpty, IsUrl, IsString, IsDateString} from 'class-validator';
 export class ClubDto {
 
- @IsString()
- @IsNotEmpty()
- readonly nombre: string;
- 
- @IsUrl()
- @IsNotEmpty()
- readonly imagen: string;
+    @IsString()
+    @IsNotEmpty()
+    readonly name: string;
 
- @IsString()
- @IsNotEmpty()
- readonly descripcion: string;
+    @IsUrl()
+    @IsNotEmpty()
+    readonly image: string;
 
- @IsDate()
- @IsNotEmpty()
- readonly fechaFundacion: Date;
+    @IsString()
+    @IsNotEmpty()
+    readonly description: string;
+
+    @IsDateString()
+    @IsNotEmpty()
+    readonly foundationDate: Date;
 }

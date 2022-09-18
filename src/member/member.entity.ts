@@ -8,13 +8,13 @@ export class MemberEntity {
     id: string;
 
     @Column()
-    nombre: string;
+    name: string;
 
     @Column()
-    correo: string;
+    email: string;
 
     @Column()
-    fechaNacimiento: Date;
+    birthDate: Date;
 
     @ManyToMany(() => ClubEntity, club => club.members)
     @JoinTable()

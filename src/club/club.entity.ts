@@ -8,16 +8,16 @@ export class ClubEntity {
     id: string;
 
     @Column()
-    nombre: string;
+    name: string;
 
     @Column()
-    fechaFundacion: Date;
+    foundationDate: Date;
 
     @Column()
-    imagen: string;
+    image: string;
 
     @Column()
-    descripcion: string;
+    description: string;
 
     @ManyToMany(() => MemberEntity, member => member.clubs)
     members: MemberEntity[];

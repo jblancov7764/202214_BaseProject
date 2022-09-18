@@ -1,15 +1,15 @@
-import {IsDate, IsNotEmpty, IsString} from 'class-validator';
+import {IsDateString, IsNotEmpty, IsString} from 'class-validator';
 export class MemberDto {
 
- @IsString()
- @IsNotEmpty()
- readonly nombre: string;
+    @IsString()
+    @IsNotEmpty()
+    readonly name: string;
 
- @IsString()
- @IsNotEmpty()
- readonly correo: string;
+    @IsString()
+    @IsNotEmpty()
+    readonly email: string;
 
- @IsDate()
- @IsNotEmpty()
- readonly fechaNacimiento: Date;
+    @IsDateString()
+    @IsNotEmpty()
+    readonly birthDate: Date;
 }

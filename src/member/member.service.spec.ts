@@ -28,9 +28,9 @@ describe('MemberService', () => {
     membersList = [];
     for(let i = 0; i < 5; i++){
         const member: MemberEntity = await repository.save({
-          nombre: faker.name.fullName(),
-          correo: faker.internet.email(),
-          fechaNacimiento: faker.date.past(10)
+          name: faker.name.fullName(),
+          email: faker.internet.email(),
+          birthDate: faker.date.past(10)
         });
         membersList.push(member)
    }
@@ -50,9 +50,9 @@ describe('MemberService', () => {
     const storedMember: MemberEntity = membersList[0];
     const member: MemberEntity = await service.findOne(storedMember.id);
     expect(member).not.toBeNull();
-    expect(member.nombre).toEqual(storedMember.nombre)
-    expect(member.correo).toEqual(storedMember.correo)
-    expect(member.fechaNacimiento).toEqual(storedMember.fechaNacimiento)
+    expect(member.name).toEqual(storedMember.name)
+    expect(member.email).toEqual(storedMember.email)
+    expect(member.birthDate).toEqual(storedMember.birthDate)
   });
 
   it('findOne should throw an exception for an invalid member', async () => {
@@ -62,9 +62,9 @@ describe('MemberService', () => {
   it('create should return a new member', async () => {
     const member: MemberEntity = {
       id: "",
-      nombre: faker.name.fullName(),
-      correo: faker.internet.email(),
-      fechaNacimiento: faker.date.past(10),
+      name: faker.name.fullName(),
+      email: faker.internet.email(),
+      birthDate: faker.date.past(10),
       clubs : []
     }
 
@@ -73,29 +73,29 @@ describe('MemberService', () => {
 
     const storedMember: MemberEntity = await repository.findOne({where: {id: newMember.id}})
     expect(storedMember).not.toBeNull();
-    expect(storedMember.nombre).toEqual(newMember.nombre)
-    expect(storedMember.correo).toEqual(newMember.correo)
-    expect(storedMember.fechaNacimiento).toEqual(newMember.fechaNacimiento)
+    expect(storedMember.name).toEqual(newMember.name)
+    expect(storedMember.email).toEqual(newMember.email)
+    expect(storedMember.birthDate).toEqual(newMember.birthDate)
   });
 
   it('update should modify a member', async () => {
     const member: MemberEntity  = membersList[0];
-    member.nombre = "New name";
-    member.correo = "New@Correo";
+    member.name = "New name";
+    member.email = "New@Correo";
   
     const updatedMember: MemberEntity = await service.update(member.id, member);
     expect(updatedMember).not.toBeNull();
   
     const storedMember: MemberEntity = await repository.findOne({ where: { id: member.id } })
     expect(storedMember).not.toBeNull();
-    expect(storedMember.nombre).toEqual(member.nombre)
-    expect(storedMember.correo).toEqual(member.correo)
+    expect(storedMember.name).toEqual(member.name)
+    expect(storedMember.email).toEqual(member.email)
   });
 
   it('update should throw an exception for an invalid member', async () => {
     const member: MemberEntity  = membersList[0];
-    member.nombre = "New name";
-    member.correo = "New@Correo";
+    member.name = "New name";
+    member.email = "New@Correo";
 
     await expect(() => service.update("0", member)).rejects.toHaveProperty("message", "The member with the given id was not found")
   });

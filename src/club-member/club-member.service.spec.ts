@@ -35,18 +35,18 @@ describe('ClubMemberService', () => {
     membersList = [];
     for(let i = 0; i < 5; i++){
         const member: MemberEntity = await memberRepository.save({
-          nombre: faker.name.fullName(),
-          correo: faker.internet.email(),
-          fechaNacimiento: faker.date.past(10),
+          name: faker.name.fullName(),
+          email: faker.internet.email(),
+          birthDate: faker.date.past(10),
         });
         membersList.push(member)
     }
 
     club = await clubRepository.save({
-      nombre: faker.name.fullName(),
-      fechaFundacion: faker.date.past(10),
-      descripcion: faker.lorem.sentence(),
-      imagen: faker.internet.url(),
+      name: faker.name.fullName(),
+      foundationDate: faker.date.past(10),
+      description: faker.lorem.sentence(),
+      image: faker.internet.url(),
       members: membersList
     });
   }
@@ -57,32 +57,32 @@ describe('ClubMemberService', () => {
 
   it('addMemberToClub should add a member to a club', async () => {
     const newMember: MemberEntity = await memberRepository.save({
-      nombre: faker.name.fullName(),
-      correo: faker.internet.email(),
-      fechaNacimiento: faker.date.past(10),
+      name: faker.name.fullName(),
+      email: faker.internet.email(),
+      birthDate: faker.date.past(10),
     });
 
     const newClub = await clubRepository.save({
-      nombre: faker.name.fullName(),
-      fechaFundacion: faker.date.past(10),
-      descripcion: faker.lorem.sentence(),
-      imagen: faker.internet.url(),
+      name: faker.name.fullName(),
+      foundationDate: faker.date.past(10),
+      description: faker.lorem.sentence(),
+      image: faker.internet.url(),
     });
  
     const result: ClubEntity = await service.addMemberToClub(newClub.id, newMember.id);
    
     expect(result.members.length).toBe(1);
     expect(result.members[0]).not.toBeNull();
-    expect(result.members[0].nombre).toBe(newMember.nombre);
+    expect(result.members[0].name).toBe(newMember.name);
   });
 
   it('addMemberToClub should thrown exception for an invalid member', async () => {
 
     const newClub = await clubRepository.save({
-      nombre: faker.name.fullName(),
-      fechaFundacion: faker.date.past(10),
-      descripcion: faker.lorem.sentence(),
-      imagen: faker.internet.url(),
+      name: faker.name.fullName(),
+      foundationDate: faker.date.past(10),
+      description: faker.lorem.sentence(),
+      image: faker.internet.url(),
     });
  
     await expect(() => service.addMemberToClub(newClub.id, "0")).rejects.toHaveProperty("message", "The member with the given id was not found");
@@ -90,9 +90,9 @@ describe('ClubMemberService', () => {
 
   it('addMemberToClub should thrown exception for an invalid club', async () => {
     const newMember: MemberEntity = await memberRepository.save({
-      nombre: faker.name.fullName(),
-      correo: faker.internet.email(),
-      fechaNacimiento: faker.date.past(10),
+      name: faker.name.fullName(),
+      email: faker.internet.email(),
+      birthDate: faker.date.past(10),
     });
 
     await expect(() => service.addMemberToClub("0", newMember.id)).rejects.toHaveProperty("message", "The club with the given id was not found");
@@ -103,7 +103,7 @@ describe('ClubMemberService', () => {
     const storedMember: MemberEntity = await service.findMemberByClubIdMemberId(club.id, member.id);
 
     expect(storedMember).not.toBeNull();
-    expect(storedMember.nombre).toBe(member.nombre);
+    expect(storedMember.name).toBe(member.name);
   });
 
   it('findMemberByClubIdMemberId should throw an exception for an invalid member', async () => {
@@ -118,9 +118,9 @@ describe('ClubMemberService', () => {
 
   it('findMemberByClubIdMemberId should throw an exception for a member not associated to the club', async () => {
     const newMember: MemberEntity = await memberRepository.save({
-      nombre: faker.name.fullName(),
-      correo: faker.internet.email(),
-      fechaNacimiento: faker.date.past(10),
+      name: faker.name.fullName(),
+      email: faker.internet.email(),
+      birthDate: faker.date.past(10),
     });
  
     await expect(
@@ -139,22 +139,22 @@ describe('ClubMemberService', () => {
 
   it('associateMembersClub should update members list for a club', async () => {
     const newMember: MemberEntity = await memberRepository.save({
-      nombre: faker.name.fullName(),
-      correo: faker.internet.email(),
-      fechaNacimiento: faker.date.past(10),
+      name: faker.name.fullName(),
+      email: faker.internet.email(),
+      birthDate: faker.date.past(10),
     });
  
     const updatedClub: ClubEntity = await service.associateMembersClub(club.id, [newMember]);
 
     expect(updatedClub.members.length).toBe(1);
-    expect(updatedClub.members[0].nombre).toBe(newMember.nombre);
+    expect(updatedClub.members[0].name).toBe(newMember.name);
   });
 
   it('associateMembersClub should throw an exception for an invalid club', async () => {
     const newMember: MemberEntity = await memberRepository.save({
-      nombre: faker.name.fullName(),
-      correo: faker.internet.email(),
-      fechaNacimiento: faker.date.past(10),
+      name: faker.name.fullName(),
+      email: faker.internet.email(),
+      birthDate: faker.date.past(10),
     });
  
     await expect(()=> service.associateMembersClub("0", [newMember])).rejects.toHaveProperty("message", "The club with the given id was not found");
@@ -191,9 +191,9 @@ describe('ClubMemberService', () => {
 
   it('deleteMemberoOfClub should throw an exception for a member not associated to the club', async () => {
     const newMember: MemberEntity = await memberRepository.save({
-      nombre: faker.name.fullName(),
-      correo: faker.internet.email(),
-      fechaNacimiento: faker.date.past(10),
+      name: faker.name.fullName(),
+      email: faker.internet.email(),
+      birthDate: faker.date.past(10),
     });
  
     await expect(
