@@ -11,11 +11,7 @@ import { ClubEntity } from './club/club.entity';
 @Module({
   imports: [MemberModule, ClubModule, ClubMemberModule,
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: '1234',
+      type: 'sqlite',
       database: 'clubs-members',
       entities: [MemberEntity, ClubEntity],
       dropSchema: true,
